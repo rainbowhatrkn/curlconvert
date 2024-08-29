@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="icon" type="image/x-icon" href="static/hack.ico">
+
+    <title>Curl Converter by Trhacknon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        p {
+            margin-top: 10px;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            border: 2px solid #007bff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #outputArea {
+            margin-top: 20px;
+            border: 2px solid #007bff;
+            padding: 10px;
+            white-space: pre-wrap;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+        /* Animations */
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .surprise-text {
+            animation: fadeInOut 2s infinite;
+            color: #e83e8c;
+        }
+        .save-button {
+            display: none;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Curl Converter <span class="surprise-text">by Trhacknon</span></h1>
+        <p class="surprise-text">Paste your <span style="color: #007bff;">curl</span> command here:</p>
+        <textarea id="curlCommand" rows="10" cols="80"></textarea>
+        <p>Select output language:</p>
+<select id="outputLanguage">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="ansible">Ansible</option>
+            <option value="cfml">ColdFusion Markup Language (CFML)</option>
+            <option value="csharp">C#</option>
+            <option value="dart">Dart</option>
+            <option value="elixir">Elixir</option>
+            <option value="go">Go</option>
+            <option value="java">Java</option>
+            <option value="javascript,node,node-axios,node-request">JavaScript (Node.js with Axios/Request)</option>
+            <option value="json">JSON</option>
+            <option value="matlab">MATLAB</option>
+            <option value="php,php-request">PHP (with cURL or Request library)</option>
+            <option value="r">R</option>
+            <option value="ruby">Ruby</option>
+            <option value="rust">Rust</option>
+            <!-- Add other language options here -->
+        </select>
+
+        <button onclick="convertCurl()">Convert</button>
+        <div id="outputArea"></div>
+            <a id="downloadLink" class="save-button">Download Converted Code</a>
+    </div>
+
+
+    <p><strong class="surprise-text">What is Curl Converter?</strong></p>
+    <p>
+        Curl Converter is a tool that allows you to convert cURL commands into code snippets in various programming languages.
+        Simply paste your cURL command into the textarea above, select the desired output language, and click "Convert".
+        The converted code will be displayed in the output area below.
+    </p>
+    <p>
+        This tool can save you time and effort when working with cURL commands by automatically generating code in your preferred programming language.
+    </p>
+    <p>
+        <strong>Supported Output Languages:</strong><br>
+        - Python<br>
+        - JavaScript<br>
+        - (Add other supported languages here)
+    </p>
+    <p>
+        <strong>Note:</strong> This tool is intended for demonstration purposes and may not handle all cURL command variations. Always review the converted code for accuracy and completeness.
+    </p>
+
+    
+<script>
+async function convertCurl() {
+    const curlCommand = document.getElementById("curlCommand").value;
+    const outputLanguage = document.getElementById("outputLanguage").value;
+
+    const response = await fetch("/convert", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ curlCommand, outputLanguage }),
+    });
+
+    const result = await response.json();
+    document.getElementById("outputArea").innerText = result.code;
+
+    // Show the download link and set the appropriate URL and filename
+    const downloadLink = document.getElementById("downloadLink");
+    downloadLink.href = `/download/${outputLanguage}?code=${encodeURIComponent(result.code)}`;
+
+    // Set the appropriate download filename based on the selected language
+    switch (outputLanguage) {
+        case 'python':
+            downloadLink.setAttribute("download", `converted_code_${Date.now()}.py`);
+            break;
+        case 'ruby':
+            downloadLink.setAttribute("download", `converted_code_${Date.now()}.rb`);
+            break;
+        case 'go':
+            downloadLink.setAttribute("download", `converted_code_${Date.now()}.go`);
+            break;
+        case 'javascript':
+            downloadLink.setAttribute("download", `converted_code_${Date.now()}.js`);
+            break;
+        // Add other languages here
+        default:
+            downloadLink.setAttribute("download", `converted_code_${Date.now()}.txt`);
+    }
+
+    downloadLink.style.display = "block";
+}
+</script>
+
+
+</body>
+</html>
