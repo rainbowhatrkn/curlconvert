@@ -1,172 +1,178 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="icon" type="image/x-icon" href="static/hack.ico">
-
+<head>
+    <link rel="icon" type="image/x-icon" href="static/hack.ico">
     <title>Curl Converter by Trhacknon</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             margin: 20px;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #ff6f61, #de6262);
+            color: #fff;
+            overflow-x: hidden;
         }
         h1 {
             text-align: center;
-            color: #007bff;
+            color: #ffde59;
+            font-size: 3rem;
+            text-shadow: 2px 2px #d53f8c;
         }
         p {
             margin-top: 10px;
-            color: #333;
+            color: #fff;
+            text-shadow: 1px 1px #333;
         }
         textarea {
             width: 100%;
-            border: 2px solid #007bff;
-            padding: 5px;
-            border-radius: 5px;
+            height: 150px;
+            border: 3px solid #ffde59;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
         select {
             width: 100%;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #444;
+            color: #ffde59;
+            font-size: 1rem;
+            border: 2px solid #ffde59;
+            margin-top: 10px;
         }
         button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #ffde59;
+            color: #d53f8c;
+            font-size: 1.2rem;
             border: none;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
         }
         button:hover {
-            background-color: #0056b3;
+            transform: scale(1.1);
+            background-color: #e8c54c;
         }
         #outputArea {
             margin-top: 20px;
-            border: 2px solid #007bff;
-            padding: 10px;
+            border: 3px solid #ffde59;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #333;
+            color: #fff;
             white-space: pre-wrap;
-            border-radius: 5px;
-            background-color: #fff;
-            color: #333;
-        }
-        /* Animations */
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
         }
         .surprise-text {
-            animation: fadeInOut 2s infinite;
+            animation: colorChange 3s infinite;
             color: #e83e8c;
+        }
+        @keyframes colorChange {
+            0% { color: #ff6f61; }
+            50% { color: #ffde59; }
+            100% { color: #e83e8c; }
         }
         .save-button {
             display: none;
+            text-decoration: none;
+            color: #333;
+            background-color: #ffde59;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .save-button:hover {
+            background-color: #e8c54c;
+            color: #d53f8c;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #fff;
+            text-shadow: 1px 1px #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Curl Converter <span class="surprise-text">by Trhacknon</span></h1>
-        <p class="surprise-text">Paste your <span style="color: #007bff;">curl</span> command here:</p>
-        <textarea id="curlCommand" rows="10" cols="80"></textarea>
+        <p class="surprise-text">Paste your <span style="color: #ffde59;">curl</span> command here:</p>
+        <textarea id="curlCommand" placeholder="curl example..."></textarea>
         <p>Select output language:</p>
-<select id="outputLanguage">
+        <select id="outputLanguage">
             <option value="python">Python</option>
             <option value="javascript">JavaScript</option>
             <option value="ansible">Ansible</option>
-            <option value="cfml">ColdFusion Markup Language (CFML)</option>
-            <option value="csharp">C#</option>
-            <option value="dart">Dart</option>
-            <option value="elixir">Elixir</option>
-            <option value="go">Go</option>
-            <option value="java">Java</option>
-            <option value="javascript,node,node-axios,node-request">JavaScript (Node.js with Axios/Request)</option>
-            <option value="json">JSON</option>
-            <option value="matlab">MATLAB</option>
-            <option value="php,php-request">PHP (with cURL or Request library)</option>
-            <option value="r">R</option>
-            <option value="ruby">Ruby</option>
-            <option value="rust">Rust</option>
             <!-- Add other language options here -->
         </select>
-
         <button onclick="convertCurl()">Convert</button>
         <div id="outputArea"></div>
-            <a id="downloadLink" class="save-button">Download Converted Code</a>
+        <a id="downloadLink" class="save-button">Download Converted Code</a>
     </div>
+    <footer>&copy; 2024 Curl Converter by Trhacknon. All rights reserved.</footer>
 
+    <script>
+        async function convertCurl() {
+            const curlCommand = document.getElementById("curlCommand").value;
+            const outputLanguage = document.getElementById("outputLanguage").value;
 
-    <p><strong class="surprise-text">What is Curl Converter?</strong></p>
-    <p>
-        Curl Converter is a tool that allows you to convert cURL commands into code snippets in various programming languages.
-        Simply paste your cURL command into the textarea above, select the desired output language, and click "Convert".
-        The converted code will be displayed in the output area below.
-    </p>
-    <p>
-        This tool can save you time and effort when working with cURL commands by automatically generating code in your preferred programming language.
-    </p>
-    <p>
-        <strong>Supported Output Languages:</strong><br>
-        - Python<br>
-        - JavaScript<br>
-        - (Add other supported languages here)
-    </p>
-    <p>
-        <strong>Note:</strong> This tool is intended for demonstration purposes and may not handle all cURL command variations. Always review the converted code for accuracy and completeness.
-    </p>
+            const response = await fetch("/convert", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ curlCommand, outputLanguage }),
+            });
 
-    
-<script>
-async function convertCurl() {
-    const curlCommand = document.getElementById("curlCommand").value;
-    const outputLanguage = document.getElementById("outputLanguage").value;
+            const result = await response.json();
+            document.getElementById("outputArea").innerText = result.code;
 
-    const response = await fetch("/convert", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ curlCommand, outputLanguage }),
-    });
+            // Show the download link and set the appropriate URL and filename
+            const downloadLink = document.getElementById("downloadLink");
+            downloadLink.href = `/download/${outputLanguage}?code=${encodeURIComponent(result.code)}`;
 
-    const result = await response.json();
-    document.getElementById("outputArea").innerText = result.code;
+            // Set the appropriate download filename based on the selected language
+            switch (outputLanguage) {
+                case 'python':
+                    downloadLink.setAttribute("download", `converted_code_${Date.now()}.py`);
+                    break;
+                case 'ruby':
+                    downloadLink.setAttribute("download", `converted_code_${Date.now()}.rb`);
+                    break;
+                case 'go':
+                    downloadLink.setAttribute("download", `converted_code_${Date.now()}.go`);
+                    break;
+                case 'javascript':
+                    downloadLink.setAttribute("download", `converted_code_${Date.now()}.js`);
+                    break;
+                // Add other languages here
+                default:
+                    downloadLink.setAttribute("download", `converted_code_${Date.now()}.txt`);
+            }
 
-    // Show the download link and set the appropriate URL and filename
-    const downloadLink = document.getElementById("downloadLink");
-    downloadLink.href = `/download/${outputLanguage}?code=${encodeURIComponent(result.code)}`;
-
-    // Set the appropriate download filename based on the selected language
-    switch (outputLanguage) {
-        case 'python':
-            downloadLink.setAttribute("download", `converted_code_${Date.now()}.py`);
-            break;
-        case 'ruby':
-            downloadLink.setAttribute("download", `converted_code_${Date.now()}.rb`);
-            break;
-        case 'go':
-            downloadLink.setAttribute("download", `converted_code_${Date.now()}.go`);
-            break;
-        case 'javascript':
-            downloadLink.setAttribute("download", `converted_code_${Date.now()}.js`);
-            break;
-        // Add other languages here
-        default:
-            downloadLink.setAttribute("download", `converted_code_${Date.now()}.txt`);
-    }
-
-    downloadLink.style.display = "block";
-}
-</script>
-
-
+            downloadLink.style.display = "block";
+        }
+    </script>
 </body>
 </html>
